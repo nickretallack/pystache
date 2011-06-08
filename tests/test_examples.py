@@ -12,6 +12,7 @@ from examples.delimiters import Delimiters
 from examples.unicode_output import UnicodeOutput
 from examples.unicode_input import UnicodeInput
 from examples.nested_context import NestedContext
+from examples.maybe_empty import MaybeEmpty
 
 class TestView(unittest.TestCase):
     def test_comments(self):
@@ -78,6 +79,10 @@ Again, Welcome!
         view = TemplatePartial(context = {'prop': 'derp'})
         view.template = '''{{>partial_in_partial}}'''
         self.assertEquals(view.render(), 'Hi derp!')
+
+	def test_existential_list(self):
+		self.assertEquals(MaybeEmpty([{"name":"this"},{"name":"that"}]).render(), "<h1>Things</h1><ul><li>this</li><li>that</li></ul>")
+		self.assertEquals(MaybeEmpty([]).render(), "")
 
 if __name__ == '__main__':
     unittest.main()
